@@ -1,8 +1,7 @@
 import { NgIf } from "@angular/common";
 import { Component, inject, type OnInit } from "@angular/core";
 import { HttpClient, provideHttpClient, withFetch } from "@angular/common/http";
-
-const API_URL = "https://fakestoreapi.com";
+import { ProductsService } from "./products.service";
 
 @Component({
   selector: "app-hello",
@@ -15,7 +14,7 @@ const API_URL = "https://fakestoreapi.com";
 
     <div *ngIf="show == true">Toggled</div>
 
-    <button (click)="(true)">Products</button>
+    <button (click)="products()">Products</button>
   `,
   providers: [HttpClient],
 })
@@ -25,18 +24,17 @@ export class HelloComponent implements OnInit {
     If you are only rendering static content at build-time, use renderProviders. 
     If you're rendering at build-time and hydrating at runtime, use both renderProviders and clientProviders
   */
-  static clientProviders = [provideHttpClient()];
-  static renderProviders = [provideHttpClient(withFetch())];
+  static clientProviders = [provideHttpClient(), ProductsService];
+  static renderProviders = [provideHttpClient(withFetch()), ProductsService];
 
-  http = inject(HttpClient);
-
+  productsService = inject(ProductsService);
+  products_data = [];
   show = false;
 
-  ngOnInit() {
-    console.log("Entre en ngOnInit");
-    this.http.get<any>(`${API_URL}/products`).subscribe((products) => {
-      console.log({ products });
-    });
+  ngOnInit() {}
+
+  products() {
+    this.productsService.get_products();
   }
 
   toggle() {
