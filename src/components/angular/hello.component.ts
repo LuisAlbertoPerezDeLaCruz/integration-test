@@ -15,8 +15,6 @@ import { ProductsComponent } from "./products/products.component";
 
     <div *ngIf="show == true">Toggled</div>
 
-    <button (click)="products()">Products</button>
-
     <app-products *ngIf="show" />
   `,
   providers: [HttpClient],
@@ -30,18 +28,9 @@ export class HelloComponent implements OnInit {
   static clientProviders = [provideHttpClient(), ProductsService];
   static renderProviders = [provideHttpClient(withFetch()), ProductsService];
 
-  productsService = inject(ProductsService);
-  products_data = [];
   show = false;
 
   ngOnInit() {}
-
-  products() {
-    this.productsService.get_products().subscribe((products) => {
-      this.products_data = products;
-      console.log("products: ", this.products_data);
-    });
-  }
 
   toggle() {
     this.show = !this.show;
