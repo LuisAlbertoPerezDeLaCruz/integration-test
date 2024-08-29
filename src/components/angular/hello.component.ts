@@ -34,7 +34,10 @@ export class HelloComponent implements OnInit {
   ngOnInit() {}
 
   products() {
-    this.productsService.get_products();
+    this.productsService.get_products().subscribe((products) => {
+      this.products_data = products;
+      console.log("products: ", this.products_data);
+    });
   }
 
   toggle() {
