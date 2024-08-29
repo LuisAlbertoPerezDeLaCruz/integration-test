@@ -2,11 +2,12 @@ import { NgIf } from "@angular/common";
 import { Component, inject, type OnInit } from "@angular/core";
 import { HttpClient, provideHttpClient, withFetch } from "@angular/common/http";
 import { ProductsService } from "./products.service";
+import { ProductsComponent } from "./products/products.component";
 
 @Component({
   selector: "app-hello",
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, ProductsComponent],
   template: `
     <p>Hello from Angular!!</p>
 
@@ -15,6 +16,8 @@ import { ProductsService } from "./products.service";
     <div *ngIf="show == true">Toggled</div>
 
     <button (click)="products()">Products</button>
+
+    <app-products *ngIf="show" />
   `,
   providers: [HttpClient],
 })
